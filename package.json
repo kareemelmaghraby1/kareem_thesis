@@ -8,8 +8,15 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.23.0",
+    "bcryptjs": "^3.0.3",
     "boxicons": "^2.1.4",
+    "connect-mongo": "^5.1.0",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.3",
+    "express-rate-limit": "^7.5.1",
+    "express-session": "^1.19.0",
     "gh-pages": "^3.2.3",
+    "mongoose": "^8.24.8",
     "query-string": "^7.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -25,7 +32,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "server": "node server/index.js",
+    "test:server": "node --test server/app.test.js"
   },
   "eslintConfig": {
     "extends": [
@@ -44,5 +53,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "proxy": "http://127.0.0.1:5000",
+  "devDependencies": {
+    "mongodb-memory-server": "^10.4.3",
+    "supertest": "^7.3.2"
   }
 }

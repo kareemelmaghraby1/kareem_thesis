@@ -8,9 +8,11 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 
 import Routes from "./routes/Routes";
+import { AuthProvider } from "./auth/AuthContext";
 
 function App() {
   return (
+    <AuthProvider>
     <BrowserRouter>
       <Route
         render={(props) => (
@@ -24,6 +26,7 @@ function App() {
         )}
       />
     </BrowserRouter>
+    </AuthProvider>
   );
 }
 
