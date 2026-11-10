@@ -6,6 +6,7 @@ import "./header.scss";
 import logo from "./../../assets/logo.png";
 
 import * as Config from "./../../constants/Config";
+import { useAuth } from "../../auth/AuthContext";
 
 const headerNav = [
   {
@@ -23,6 +24,7 @@ const headerNav = [
 ];
 
 const Header = () => {
+  const { user, loading } = useAuth();
   const { pathname } = useLocation();
   const headerRef = useRef(null);
 
@@ -61,6 +63,11 @@ const Header = () => {
               <Link to={e.path}>{e.display}</Link>
             </li>
           ))}
+          <li className={pathname === `/${Config.HOME_PAGE}/${user ? 'account' : 'login'}` ? 'active' : ''}>
+            <Link to={`/${Config.HOME_PAGE}/${user ? 'account' : 'login'}`}>
+              {loading ? 'Account' : user ? 'My account' : 'Log in'}
+            </Link>
+          </li>
         </ul>
       </div>
     </div>

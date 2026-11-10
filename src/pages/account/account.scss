@@ -1,0 +1,40 @@
+.account-page {
+  min-height: 85vh;
+  padding: 11rem 1.5rem 5rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.account-card {
+  width: 100%;
+  max-width: 460px;
+  padding: 2.5rem;
+  border: 1px solid #333;
+  border-radius: 18px;
+  background: #191919;
+  font-size: 16px;
+
+  h1 { font-size: 1.9em; margin: 0.4em 0; }
+  .account-eyebrow { color: #ff6666; font-size: 0.75em; font-weight: 700; letter-spacing: 0.12em; }
+  .account-description { color: #bbb; margin-bottom: 1.8em; overflow-wrap: anywhere; }
+  form { display: flex; flex-direction: column; }
+  label { margin: 1em 0 0.5em; font-weight: 600; }
+  input, select {
+    width: 100%; min-height: 46px; padding: 0.8em;
+    border: 1px solid #666; border-radius: 8px;
+    background: #101010; color: #fff; font: inherit;
+  }
+  small { margin-top: 0.5em; color: #bbb; }
+  button { font: inherit; cursor: pointer; }
+  button:disabled { opacity: 0.6; cursor: wait; }
+  input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px solid #ff6666; outline-offset: 3px; }
+  .account-primary { background: #d90000; color: #fff; padding: 0.9em; border: 0; border-radius: 8px; margin-top: 1.8em; font-weight: 700; }
+  .account-link { display: block; background: none; border: 0; color: #ddd; text-decoration: underline; margin: 1.5em auto 0; }
+  .account-error { color: #ff9999; margin-top: 1em; }
+  .account-success { color: #9de8b2; margin-top: 1em; }
+}
+
+@media (max-width: 600px) {
+  .account-card { padding: 1.5rem; }
+}
