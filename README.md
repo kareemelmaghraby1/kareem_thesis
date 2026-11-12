@@ -14,6 +14,12 @@ Requires Node.js 20+ and MongoDB (local or MongoDB Atlas).
 
 Choose **Create an account**, enter your email and password, then save your preferred genre and favorite movie on **My account**. Preferences are stored per user and reload after logging in again. An empty movie title clears the favorite; **No preference** clears the genre. Browsing movies does not require an account.
 
+## Favourites
+
+Click **♡ Favourite** below any movie or TV card, or on its detail page. Log in first if prompted, then click the button again. Open **My favourites** in the navigation to see your list; click **♥ Saved** to remove a title. Each account has its own list, saved across logins. In MongoDB Compass, open `kareem_movies` → `users` and expand `favorites` to see the saved titles. Existing accounts work without a migration.
+
+API routes: `PUT /api/favorites/:category/:id` (body: `title`, `posterPath`) and `DELETE /api/favorites/:category/:id`. Category is `movie` or `tv`; ID is the TMDB title ID. The list is included in `/api/auth/me`.
+
 ## How it works
 
 The React app calls a small Express API using a session cookie. MongoDB stores users (email, bcrypt password hash, preferences) and sessions. Password hashes never leave the server. The API validates input, limits login attempts, and requires a custom header on writes to prevent cross-origin form submissions. Sessions expire after seven days and are destroyed on logout.

@@ -47,12 +47,22 @@ export function AuthProvider({ children }) {
       throw error;
     }
   };
+  const saveFavorite = async (category, item, remove = false) => {
+    try {
+      const updated = await accountRequest(`/favorites/${category}/${item.id}`, remove ? 'DELETE' : 'PUT',
+        remove ? undefined : { title: item.title || item.name, posterPath: item.poster_path || '' });
+      setUser(updated);
+    } catch (error) {
+      if (error.status === 401) setUser(null);
+      throw error;
+    }
+  };
   const logout = async () => {
     await accountRequest('/auth/logout', 'POST');
     setUser(null);
   };
 
-  return <AuthContext.Provider value={{ user, loading, error, authenticate, savePreferences, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, loading, error, authenticate, savePreferences, saveFavorite, logout }}>{children}</AuthContext.Provider>;
 }
 
 export const useAuth = () => useContext(AuthContext);

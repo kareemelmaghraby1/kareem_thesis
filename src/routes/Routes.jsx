@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Catalog from "../pages/Catalog";
 import Detail from "../pages/detail/Detail";
 import Login from "../pages/account/Login";
+import Favorites from "../pages/account/Favorites";
 import Account from "../pages/account/Account";
 
 import * as Config from "../constants/Config";
@@ -12,6 +13,7 @@ import * as Config from "../constants/Config";
 const Routes = () => {
   return (
     <Switch>
+      <Route path={`/${Config.HOME_PAGE}/favorites`} exact component={Favorites} />
       <Route path={`/${Config.HOME_PAGE}/login`} exact component={Login} />
       <Route path={`/${Config.HOME_PAGE}/account`} exact component={Account} />
       <Route

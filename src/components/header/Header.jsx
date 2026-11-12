@@ -63,6 +63,9 @@ const Header = () => {
               <Link to={e.path}>{e.display}</Link>
             </li>
           ))}
+          {user && <li className={pathname === `/${Config.HOME_PAGE}/favorites` ? 'active' : ''}>
+            <Link to={`/${Config.HOME_PAGE}/favorites`}>My favourites</Link>
+          </li>}
           <li className={pathname === `/${Config.HOME_PAGE}/${user ? 'account' : 'login'}` ? 'active' : ''}>
             <Link to={`/${Config.HOME_PAGE}/${user ? 'account' : 'login'}`}>
               {loading ? 'Account' : user ? 'My account' : 'Log in'}
