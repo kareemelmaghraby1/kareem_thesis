@@ -1,0 +1,8 @@
+.favorites-page {
+  padding: 11rem 2rem 4rem; min-height: 80vh;
+  > p { margin: 1rem 0 2rem; color: #ccc; }
+  > p a { text-decoration: underline; }
+}
+.favorites-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 2rem 1rem;
+}

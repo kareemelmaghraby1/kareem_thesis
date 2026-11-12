@@ -5,6 +5,7 @@ import tmdbApi from "../../api/tmdbApi";
 import apiConfig from "../../api/apiConfig";
 
 import "./detail.scss";
+import FavoriteButton from "../../components/favorite-button/FavoriteButton";
 import CastList from "./CastList";
 import VideoList from "./VideoList";
 import MovieList from "./../../components/movie-list/MovieList";
@@ -58,6 +59,7 @@ const Detail = () => {
                     </span>
                   ))}
               </div>
+              <FavoriteButton key={`${category}/${id}`} category={category} item={item} />
               <p className="overview">{item.overview}</p>
               <div className="cast">
                 <div className="section__header">

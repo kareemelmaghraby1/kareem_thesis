@@ -91,3 +91,16 @@
     }
   }
 }
+
+@media only screen and (min-width: 601px) and (max-width: 1500px) {
+  .header__wrap { flex-direction: column; justify-content: center; gap: 0.5rem; }
+  .header .logo { font-size: 1.8rem; }
+  .header__nav li { font-size: 1.1rem; }
+  .header__nav > * ~ * { margin-left: 1.2rem; }
+  .header.shrink .logo img { width: 28px; }
+}
+
+@media only screen and (max-width: 600px) {
+  .header__nav { padding: 0 1rem; }
+  .header__nav li { font-size: 1.2rem; }
+}

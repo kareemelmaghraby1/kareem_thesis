@@ -10,13 +10,19 @@ const genres = ['', 'Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Docu
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   passwordHash: { type: String, required: true, select: false },
+  favorites: { type: [new mongoose.Schema({
+    tmdbId: { type: Number, required: true },
+    category: { type: String, enum: ['movie', 'tv'], required: true },
+    title: { type: String, required: true, maxlength: 200 },
+    posterPath: { type: String, default: '' },
+  }, { _id: false })], default: [] },
   preferences: {
     favoriteGenre: { type: String, enum: genres, default: '' },
     favoriteMovie: { type: String, maxlength: 200, default: '' },
   },
 });
 const User = mongoose.model('User', userSchema);
-const publicUser = (user) => ({ email: user.email, preferences: user.preferences });
+const publicUser = (user) => ({ email: user.email, preferences: user.preferences, favorites: user.favorites || [] });
 
 function createApp({ mongoUrl, sessionSecret, production = false }) {
   if (!sessionSecret || sessionSecret.length < 32) {
@@ -90,6 +96,30 @@ function createApp({ mongoUrl, sessionSecret, production = false }) {
     req.user.preferences = { favoriteGenre, favoriteMovie: favoriteMovie.trim() };
     await req.user.save();
     res.json(publicUser(req.user));
+  }));
+  const favoriteKey = (req, res, next) => {
+    const { category, id } = req.params;
+    if (!['movie', 'tv'].includes(category) || !/^[1-9]\d*$/.test(id) || !Number.isSafeInteger(Number(id))) {
+      return res.status(400).json({ message: 'Choose a valid movie or TV show.' });
+    }
+    req.favoriteKey = { category, tmdbId: Number(id) };
+    next();
+  };
+  app.put('/api/favorites/:category/:id', requireUser, favoriteKey, route(async (req, res) => {
+    const { title, posterPath = '' } = req.body || {};
+    if (typeof title !== 'string' || !title.trim() || title.trim().length > 200 ||
+        typeof posterPath !== 'string' || (posterPath !== '' && !/^\/[a-zA-Z0-9_-]+\.(jpg|png|webp)$/.test(posterPath))) {
+      return res.status(400).json({ message: 'Provide a valid title and poster path.' });
+    }
+    // Match and append atomically so repeated clicks cannot create duplicates.
+    await User.updateOne({ _id: req.user._id, favorites: { $not: { $elemMatch: req.favoriteKey } } },
+      { $push: { favorites: { ...req.favoriteKey, title: title.trim(), posterPath } } });
+    res.json(publicUser(await User.findById(req.user._id)));
+  }));
+  app.delete('/api/favorites/:category/:id', requireUser, favoriteKey, route(async (req, res) => {
+    const user = await User.findByIdAndUpdate(req.user._id,
+      { $pull: { favorites: req.favoriteKey } }, { new: true });
+    res.json(publicUser(user));
   }));
   app.post('/api/auth/logout', (req, res, next) => {
     req.session.destroy((error) => {

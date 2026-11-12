@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
 import { HOME_PAGE } from '../../constants/Config';
 import './account.scss';
@@ -45,6 +45,7 @@ export default function Account() {
         <p className="account-eyebrow">YOUR MOVIE SPACE</p>
         <h1 id="account-title">My preferences</h1>
         <p className="account-description">Signed in as {user.email}</p>
+        <Link to={`/${HOME_PAGE}/favorites`}>♥ My favourites</Link>
         <form onSubmit={submit} onChange={() => setSaved(false)}>
           <label htmlFor="genre">Preferred genre</label>
           <select id="genre" value={favoriteGenre} onChange={(e) => setFavoriteGenre(e.target.value)}>

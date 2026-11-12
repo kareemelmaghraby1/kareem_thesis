@@ -1,0 +1,9 @@
+.favorite-action { margin: 0.7rem 0; }
+.favorite-button {
+  background: #191919; color: #fff; border: 1px solid #777;
+  border-radius: 8px; padding: 0.6em 0.9em; font: inherit; cursor: pointer;
+  &[aria-pressed="true"] { border-color: #ff6666; color: #ff9999; }
+  &:disabled { opacity: 0.6; cursor: wait; }
+  &:focus-visible { outline: 2px solid #ff6666; outline-offset: 3px; }
+}
+.favorite-error { color: #ff9999; font-size: 0.9em; }
